@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornada Acessível - Orientação Profissional Inclusiva</title>
+    <!-- Link para o arquivo CSS externo -->
+    <link rel="stylesheet" href="expotstyle.css">
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR -->
+    <header class="topbar">
+        <a href="#" class="brand" onclick="mudarTela('screen-hero')">Jornada<b>.</b></a>
+        
+        <div class="color-control">
+            <button class="color-button" id="btn-menu-tema" aria-label="Alterar tema e acessibilidade">
+                <div class="dotset">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <span>Tema & Acessibilidade</span>
+            </button>
+            <div class="color-menu" id="menu-tema">
+                <p>Modo de Cores / Daltonismo</p>
+                <button class="theme-option active" onclick="setTema('')">
+                    Padrão (Normal)
+                    <span class="palette"><i></i><i></i><i></i></span>
+                </button>
+                <button class="theme-option" onclick="setTema('deuteranopia')">
+                    Deuteranopia
+                    <span class="palette"><i></i><i></i><i></i></span>
+                </button>
+                <button class="theme-option" onclick="setTema('protanopia')">
+                    Protanopia
+                    <span class="palette"><i></i><i></i><i></i></span>
+                </button>
+                <button class="theme-option" onclick="setTema('tritanopia')">
+                    Tritanopia
+                    <span class="palette"><i></i><i></i><i></i></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- TELA 1: HERO / INÍCIO -->
+        <section id="screen-hero" class="screen active">
+            <div class="hero">
+                <div>
+                    <div class="eyebrow">Orientação Profissional 100% Inclusiva</div>
+                    <h1>Descubra o seu caminho com <em>clareza total</em>.</h1>
+                    <p>Uma experiência guiada, adaptada ao seu perfil, deficiência ou neurodivergência para encontrar as melhores carreiras, faculdades e áreas para você se especializar sem barreiras.</p>
+                    <button class="button" onclick="mudarTela('screen-accessibility-check')">Iniciar Jornada</button>
+                </div>
+                <div class="hero-art">
+                    <div class="art-card one">
+                        <div class="tiny">Perfil Inclusivo</div>
+                        <strong>Foco na Pessoa</strong>
+                        <div class="progress-line"><i></i></div>
+                    </div>
+                    <div class="art-card two">
+                        <div class="tiny">Quiz Inteligente</div>
+                        <strong>15 Perguntas Detalhadas</strong>
+                    </div>
+                    <div class="spark">✨</div>
+                    <div class="leaves">🌱</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TELA 1.5: PERFIL DE ACESSIBILIDADE E NECESSIDADES -->
+        <section id="screen-accessibility-check" class="screen">
+            <div class="needs-wrap">
+                <div class="needs-card">
+                    <h1>Perfil e Acessibilidade</h1>
+                    <p>Para começarmos, você possui alguma deficiência, neurodivergência ou transtorno que gostaria de informar? Isso nos ajuda a personalizar faculdades, carreiras e ambientes ideais para você.</p>
+                    
+                    <div class="notice">
+                        ℹ️ Selecione uma ou mais opções abaixo que se apliquem à sua realidade. Caso não possua nenhuma, basta avançar.
+                    </div>
+
+                    <div class="need-grid">
+                        <div class="need" onclick="toggleAccessibility(this, 'visual')">
+                            <span>👁️</span>
+                            Deficiência Visual
+                        </div>
+                        <div class="need" onclick="toggleAccessibility(this, 'fisica')">
+                            <span>♿</span>
+                            Deficiência Física / Motora
+                        </div>
+                        <div class="need" onclick="toggleAccessibility(this, 'auditiva')">
+                            <span>🦻</span>
+                            Deficiência Auditiva
+                        </div>
+                        <div class="need" onclick="toggleAccessibility(this, 'tea')">
+                            <span>🧩</span>
+                            Neurodivergência (TEA / Autismo)
+                        </div>
+                        <div class="need" onclick="toggleAccessibility(this, 'tdah')">
+                            <span>⚡</span>
+                            TDAH / Dislexia
+                        </div>
+                        <div class="need" onclick="toggleAccessibility(this, 'ansiedade')">
+                            <span>🌿</span>
+                            Ansiedade / Transtorno Mental
+                        </div>
+                    </div>
+
+                    <div class="actions" style="margin-top: 30px;">
+                        <button class="back" onclick="mudarTela('screen-hero')">← Voltar</button>
+                        <button class="button" onclick="iniciarQuiz()">Começar o Quiz (15 Perguntas)</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TELA 2: PERGUNTA / QUIZ -->
+        <section id="screen-journey" class="screen">
+            <div class="journey">
+                <div class="journey-head">
+                    <h2>Quiz de Orientação</h2>
+                    <span class="step" id="step-indicator">Pergunta 1 de 15</span>
+                </div>
+                <div class="progress"><div id="progress-bar" style="width: 6.66%;"></div></div>
+
+                <div class="question-card">
+                    <h2 id="question-title">Carregando pergunta...</h2>
+                    <p id="question-desc">Selecione a opção que melhor se alinha com o seu perfil.</p>
+                    
+                    <div class="options" id="options-container">
+                        <!-- Inserido via JavaScript -->
+                    </div>
+
+                    <div class="actions">
+                        <button class="back" id="btn-voltar-pergunta" onclick="perguntaAnterior()">← Voltar</button>
+                        <button class="button" id="btn-proxima-pergunta" onclick="proximaPergunta()">Avançar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TELA 4: RESULTADOS -->
+        <section id="screen-results" class="screen">
+            <div class="results">
+                <div class="result-hero">
+                    <div class="eyebrow">Diagnóstico e Direcionamento Concluído</div>
+                    <h1>Seu plano de carreira e faculdades inclusivas estão prontos.</h1>
+                    <p>Cruzamos o seu perfil funcional e as suas respostas nas 15 perguntas para montar um guia altamente informativo de cursos, faculdades, áreas de atuação e adaptações profissionais.</p>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-card">
+                        <h3>Áreas e Profissões Ideais</h3>
+                        <div style="margin-bottom: 15px;" id="result-tags">
+                            <!-- Tags dinâmicas -->
+                        </div>
+                        <ul class="list" id="result-profissoes">
+                            <!-- Preenchido via JS -->
+                        </ul>
+                    </div>
+
+                    <div class="result-card accessible">
+                        <h3>Faculdades, Cursos e Suporte Inclusivo</h3>
+                        <p style="margin-bottom: 15px;">Diretrizes institucionais e adaptações recomendadas para o seu pleno desenvolvimento:</p>
+                        <ul class="list" id="result-faculdades">
+                            <!-- Preenchido via JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="actions" style="margin-top: 30px;">
+                    <button class="button secondary" onclick="mudarTela('screen-hero')">Reiniciar Jornada</button>
+                    <button class="button" onclick="window.print()">Imprimir / Salvar Relatório</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="disclaimer">
+        Jornada Acessível — Todos os direitos reservados. Projeto desenvolvido com foco em usabilidade inclusiva e orientação profissional universal.
+    </div>
+
+    <!-- JAVASCRIPT DE SUPORTE À INTERATIVIDADE E QUIZ -->
+    <script>
+        // Menu de daltonismo
+        const btnMenuTema = document.getElementById('btn-menu-tema');
+        const menuTema = document.getElementById('menu-tema');
+
+        btnMenuTema.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuTema.classList.toggle('open');
+        });
+
+        window.addEventListener('click', () => {
+            if (menuTema.classList.contains('open')) {
+                menuTema.classList.remove('open');
+            }
+        });
+
+        menuTema.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        function setTema(classeTema) {
+            document.body.className = classeTema;
+            const botoes = menuTema.querySelectorAll('.theme-option');
+            botoes.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            menuTema.classList.remove('open');
+        }
+
+        function mudarTela(idTela) {
+            const telas = document.querySelectorAll('.screen');
+            telas.forEach(t => t.classList.remove('active'));
+            const telaAlvo = document.getElementById(idTela);
+            if (telaAlvo) {
+                telaAlvo.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Variáveis de Estado do Quiz e Perfil
+        let perfilSelecionado = [];
+        let perguntaAtual = 0;
+        let respostasUsuario = [];
+
+        function toggleAccessibility(elemento, tipo) {
+            elemento.classList.toggle('selected');
+            if (perfilSelecionado.includes(tipo)) {
+                perfilSelecionado = perfilSelecionado.filter(item => item !== tipo);
+            } else {
+                perfilSelecionado.push(tipo);
+            }
+        }
+
+        function iniciarQuiz() {
+            perguntaAtual = 0;
+            respostasUsuario = [];
+            mudarTela('screen-journey');
+            carregarPergunta();
+        }
+
+        // 15 Perguntas Completas e Informativas
+        const perguntas = [
+            {
+                titulo: "Como você prefere absorver novos conhecimentos e aprender?",
+                desc: "Escolha o formato que melhor facilita a sua compreensão cotidiana.",
+                opcoes: [
+                    { texto: "Visualmente (gráficos, vídeos, mapas mentais, diagramas)", valor: "visual" },
+                    { texto: "Praticamente (fazendo, testando, experimentos e protótipos)", valor: "pratico" },
+                    { texto: "Auditiva/Leitura (leituras longas, podcasts, debates e palestras)", valor: "teorico" }
+                ]
+            },
+            {
+                titulo: "Qual ambiente de trabalho ou estudo te deixa mais confortável?",
+                desc: "Pense em onde você rende melhor e sente menos desgaste mental.",
+                opcoes: [
+                    { texto: "Ambiente calmo, previsível, com rotinas estruturadas e foco individual", valor: "estruturado" },
+                    { texto: "Ambiente dinâmico, colaborativo, com muitas interações humanas diárias", valor: "social" },
+                    { texto: "Ambiente flexível/Remoto, onde posso gerenciar meus próprios horários e pausas", valor: "flexivel" }
+                ]
+            },
+            {
+                titulo: "Qual área geral mais desperta sua curiosidade intelectual?",
+                desc: "Selecione a área onde você passaria horas pesquisando por prazer.",
+                opcoes: [
+                    { texto: "Tecnologia, Inovação, Computação e Engenharia de Dados", valor: "tech" },
+                    { texto: "Ciências Humanas, Educação, Direitos, Psicologia e Inclusão Social", valor: "humanas" },
+                    { texto: "Negócios, Gestão, Empreendedorismo, Finanças e Administração", valor: "negocios" },
+                    { texto: "Ciências da Saúde, Biológicas, Bem-estar ou Design Criativo", valor: "saude_criativa" }
+                ]
+            },
+            {
+                titulo: "Como você lida com prazos e entregas sob pressão?",
+                desc: "Entender seu ritmo ajuda a encontrar profissões alinhadas à sua saúde mental.",
+                opcoes: [
+                    { texto: "Prefiro prazos bem planejados com antecedência e etapas claras", valor: "planejado" },
+                    { texto: "Consigo lidar bem com urgências e resolução rápida de problemas dinâmicos", valor: "dinamico" },
+                    { texto: "Gosto de autonomia total sobre o cronograma, focando na qualidade final", valor: "autonomo" }
+                ]
+            },
+            {
+                titulo: "Qual é o seu nível de afinidade atual com ferramentas tecnológicas?",
+                desc: "Ferramentas digitais facilitam adaptações ergonômicas e de acessibilidade.",
+                opcoes: [
+                    { texto: "Alto (adoro explorar softwares, automações e sistemas digitais)", valor: "alto" },
+                    { texto: "Médio (uso no dia a dia para estudos ou tarefas comuns)", valor: "medio" },
+                    { texto: "Prefiro focar em atividades analógicas, artísticas ou manuais", valor: "analogico" }
+                ]
+            },
+            {
+                titulo: "Como você prefere interagir com equipes e colegas?",
+                desc: "A comunicação inclusiva pode ser síncrona ou assíncrona.",
+                opcoes: [
+                    { texto: "Comunicação predominantemente escrita (chats, e-mails, documentações)", valor: "escrita" },
+                    { texto: "Reuniões presenciais ou chamadas de vídeo frequentes e diretas", valor: "falada" },
+                    { texto: "Trabalho independente com alinhamentos pontuais e curtos", valor: "independente" }
+                ]
+            },
+            {
+                titulo: "Qual o seu principal objetivo ao buscar uma faculdade ou curso?",
+                desc: "Isso define o tipo de instituição ideal para o seu perfil.",
+                opcoes: [
+                    { texto: "Conquistar rápida empregabilidade e inserção no mercado corporativo", valor: "emprego" },
+                    { texto: "Aprofundar pesquisa acadêmica, inovação e fundamentos teóricos sólidos", valor: "academico" },
+                    { texto: "Empreender, abrir meu próprio negócio ou consultoria especializada", valor: "empreender" }
+                ]
+            },
+            {
+                titulo: "Como você lida com estímulos sensoriais intensos (luzes fortes, barulhos)?",
+                desc: "Essencial para neurodivergentes e pessoas sensíveis a ruídos ou ambientes cheios.",
+                opcoes: [
+                    { texto: "Prefiro ambientes silenciosos, iluminados de forma natural e sem excesso de ruídos", valor: "silencioso" },
+                    { texto: "Consigo me concentrar mesmo em ambientes movimentados se usar fones ou bloqueios", valor: "adaptavel" },
+                    { texto: "Gosto de movimento constante e ambientes vibrantes ao meu redor", valor: "vibrante" }
+                ]
+            },
+            {
+                titulo: "Que tipo de tarefas trazem mais sensação de dever cumprido para você?",
+                desc: "Identifique a natureza do seu trabalho ideal.",
+                opcoes: [
+                    { texto: "Resolver problemas lógicos complexos ou estruturar sistemas", valor: "logico" },
+                    { texto: "Ajudar pessoas diretamente, orientar, cuidar ou ensinar", valor: "cuidar" },
+                    { texto: "Criar conteúdos visuais, artísticos, textos ou projetos inovadores", valor: "criativo" }
+                ]
+            },
+            {
+                titulo: "Qual a sua preferência em relação a deslocamentos diários?",
+                desc: "Pessoas com deficiência física ou mobilidade reduzida valorizam autonomia de transporte.",
+                opcoes: [
+                    { texto: "Trabalho/Estudo 100% Remoto ou híbrido com poucas idas presenciais", valor: "remoto" },
+                    { texto: "Local próximo à minha residência com total infraestrutura de acessibilidade urbana", valor: "proximo" },
+                    { texto: "Não me importo com o deslocamento desde que o transporte e o campus sejam adaptados", valor: "transporte" }
+                ]
+            },
+            {
+                titulo: "Como você prefere organizar suas tarefas do dia a dia?",
+                desc: "Sistemas de organização ajudam muito na previsibilidade e clareza mental.",
+                opcoes: [
+                    { texto: "Uso softwares de gestão de tarefas, checklists detalhados e lembretes automáticos", valor: "digital" },
+                    { texto: "Prefiro agendas físicas, blocos de notas de papel e quadros visuais (Kanban)", valor: "fisico" },
+                    { texto: "Gosto de fluidez orgânica, decidindo prioridades conforme o momento", valor: "fluido" }
+                ]
+            },
+            {
+                titulo: "Qual o seu grau de conforto ao liderar equipes ou projetos?",
+                desc: "Perfis de liderança podem ser exercidos de diversas formas inclusivas.",
+                opcoes: [
+                    { texto: "Gosto de liderar pelo exemplo técnico, orientando processos e qualidade", valor: "lider_tecnico" },
+                    { texto: "Gosto de motivar pessoas, mediar conflitos e coordenar equipes empáticas", valor: "lider_humano" },
+                    { texto: "Prefiro focar nas minhas especialidades como especialista autônomo", valor: "especialista" }
+                ]
+            },
+            {
+                titulo: "Como você prefere que feedbacks e avaliações sejam feitos?",
+                desc: "O formato do feedback afeta diretamente a segurança emocional e ansiedade.",
+                opcoes: [
+                    { texto: "Feedbacks objetivos, escritos, detalhados e enviados com antecedência", valor: "escrito_direto" },
+                    { texto: "Conversas individuais acolhedoras com espaço para diálogo aberto", valor: "conversana" },
+                    { texto: "Métricas claras e transparentes de desempenho automatizadas", valor: "metricas" }
+                ]
+            },
+            {
+                titulo: "Qual formato de curso superior atrai mais o seu interesse?",
+                desc: "Pense na duração e na carga horária ideal para a sua rotina.",
+                opcoes: [
+                    { texto: "Cursos superiores tradicionais (Bacharelado de 4 a 5 anos)", valor: "bacharelado" },
+                    { texto: "Cursos superiores tecnológicos mais curtos (2 a 3 anos com foco prático)", valor: "tecnologo" },
+                    { texto: "Certificações modulares, especializações rápidas e cursos livres continuados", valor: "modular" }
+                ]
+            },
+            {
+                titulo: "O que é indispensável para você em uma instituição de ensino ou empresa?",
+                desc: "Selecione o pilar primordial para o seu bem-estar e permanência no local.",
+                opcoes: [
+                    { texto: "Cultura genuína de diversidade, equidade e acessibilidade arquitetônica/digital", valor: "cultura_inclusiva" },
+                    { texto: "Suporte pedagógico individualizado e ferramentas de adaptação de provas/materiais", valor: "suporte_pedagogico" },
+                    { texto: "Flexibilidade total de horários e adaptação para saúde mental", valor: "flexibilidade_mental" }
+                ]
+            }
+        ];
+
+        function carregarPergunta() {
+            const p = perguntas[perguntaAtual];
+            document.getElementById('step-indicator').innerText = `Pergunta ${perguntaAtual + 1} de ${perguntas.length}`;
+            document.getElementById('progress-bar').style.width = `${((perguntaAtual + 1) / perguntas.length) * 100}%`;
+            document.getElementById('question-title').innerText = p.titulo;
+            document.getElementById('question-desc').innerText = p.desc;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            p.opcoes.forEach((opcao, index) => {
+                const btn = document.createElement('button');
+                btn.className = `option ${respostasUsuario[perguntaAtual] === index ? 'selected' : ''}`;
+                btn.innerHTML = `<div class="choice-icon">${index === 0 ? '🚀' : index === 1 ? '🎯' : '💡'}</div> ${opcao.texto}`;
+                btn.onclick = () => selecionarResposta(index, btn);
+                container.appendChild(btn);
+            });
+
+            document.getElementById('btn-voltar-pergunta').style.display = perguntaAtual === 0 ? 'none' : 'block';
+            document.getElementById('btn-proxima-pergunta').innerText = perguntaAtual === perguntas.length - 1 ? 'Ver Resultados' : 'Avançar';
+        }
+
+        function selecionarResposta(index, elemento) {
+            const opcoes = elemento.parentNode.querySelectorAll('.option');
+            opcoes.forEach(op => op.classList.remove('selected'));
+            elemento.classList.add('selected');
+            respostasUsuario[perguntaAtual] = index;
+        }
+
+        function proximaPergunta() {
+            if (respostasUsuario[perguntaAtual] === undefined) {
+                alert("Por favor, selecione uma opção para continuar.");
+                return;
+            }
+
+            if (perguntaAtual < perguntas.length - 1) {
+                perguntaAtual++;
+                carregarPergunta();
+            } else {
+                gerarResultadosInclusivos();
+                mudarTela('screen-results');
+            }
+        }
+
+        function perguntaAnterior() {
+            if (perguntaAtual > 0) {
+                perguntaAtual--;
+                carregarPergunta();
+            }
+        }
+
+        // Sistema Inteligente de Cruzamento de Dados (Inclusivo e Informativo)
+        function gerarResultadosInclusivos() {
+            const tagsContainer = document.getElementById('result-tags');
+            const profissoesContainer = document.getElementById('result-profissoes');
+            const faculdadesContainer = document.getElementById('result-faculdades');
+
+            tagsContainer.innerHTML = '';
+            profissoesContainer.innerHTML = '';
+            faculdadesContainer.innerHTML = '';
+
+            // Gerar Tags de Perfil
+            let tagsHtml = `<span class="tag">Perfil Personalizado</span>`;
+            if (perfilSelecionado.length > 0) {
+                perfilSelecionado.forEach(p => {
+                    tagsHtml += `<span class="tag" style="background:#eef1ff; color:var(--violet);">Adaptação: ${p.toUpperCase()}</span>`;
+                });
+            } else {
+                tagsHtml += `<span class="tag">Desenvolvimento Universal</span>`;
+            }
+            tagsContainer.innerHTML = tagsHtml;
+
+            // Recomendações baseadas nas deficiências/transtornos informados + perfil do quiz
+            let profissoesList = [];
+            let faculdadesList = [];
+
+            if (perfilSelecionado.includes('visual')) {
+                profissoesList.push({
+                    cargo: "Desenvolvimento de Software, Acessibilidade Digital e UX Writing",
+                    desc: "Áreas com forte demanda por leitores de tela, navegação sem mouse e testes estritos de conformidade WCAG."
+                });
+                profissoesList.push({
+                    cargo: "Psicologia, Musicoterapia, Consultoria e Direito Digital",
+                    desc: "Profissões focadas na escuta ativa, argumentação verbal e atendimento humanizado de alta excelência."
+                });
+                faculdadesList.push({
+                    nome: "Universidades com Núcleos de Acessibilidade (NAAP)",
+                    detalhes: "Oferecem acervo bibliográfico em Braille, leitores de tela licenciados (NVDA/JAWS) e suporte pedagógico em exames."
+                });
+            }
+
+            if (perfilSelecionado.includes('fisica')) {
+                profissoesList.push({
+                    cargo: "Engenharia de Dados, Análise de Sistemas, Arquitetura de Nuvem e Design Gráfico",
+                    desc: "Carreiras com excelente adaptação para regime remoto integral ou híbrido ergonômico."
+                });
+                profissoesList.push({
+                    cargo: "Tradução, Redação Técnica, Produção de Conteúdo e Gestão de Projetos Ágeis",
+                    desc: "Atividades baseadas em entregas por metas digitais, garantindo autonomia de horários."
+                });
+                faculdadesList.push({
+                    nome: "Faculdades com Infraestrutura Arquiteturada 100% Acessível",
+                    detalhes: "Campi com rampas normalizadas, elevadores amplos, banheiros adaptados, vagas reservadas e plataformas virtuais integradas."
+                });
+            }
+
+            if (perfilSelecionado.includes('tea') || perfilSelecionado.includes('tdah')) {
+                profissoesList.push({
+                    cargo: "Cientista de Dados, Pesquisa Acadêmica, Programação de Sistemas e QA (Quality Assurance)",
+                    desc: "Profissões que valorizam foco profundo em hiper-foco, lógica estruturada, clareza de requisitos e menor ambiguidade social."
+                });
+                profissoesList.push({
+                    cargo: "Ilustração Digital, Edição de Vídeo, Análise Financeira e Cibersegurança",
+                    desc: "Ambientes focados em entregas técnicas independentes com processos padronizados."
+                });
+                faculdadesList.push({
+                    nome: "Instituições com Planos de Apoio à Neurodivergência",
+                    detalhes: "Suporte para extensão de tempo em avaliações, salas de descompressão sensorial e clareza em ementas pedagógicas."
+                });
+            }
+
+            if (perfilSelecionado.includes('ansiedade') || perfilSelecionado.includes('auditiva')) {
+                profissoesList.push({
+                    cargo: "Desenvolvimento Web Full-Stack, Gestão de Tráfego Pago, Estatística e Controladoria",
+                    desc: "Carreiras focadas na comunicação assíncrona (escrita), reduzindo reuniões excessivas e estresse de reuniões faladas."
+                });
+                faculdadesList.push({
+                    nome: "Cursos Superiores na modalidade EAD Autorizada ou Híbrida Acessível",
+                    detalhes: "Intérpretes de Libras obrigatórios em aulas síncronas/assíncronas, legendas automáticas em videoaulas e suporte psicológico estudantil."
+                });
+            }
+
+            // Se nenhum especial foi selecionado ou para complementar
+            if (profissoesList.length === 0) {
+                profissoesList.push({
+                    cargo: "Administração, Gestão de Negócios e Inovação Corporativa",
+                    desc: "Ideal para perfis versáteis que buscam liderança e visão estratégica de mercado."
+                });
+                profissoesList.push({
+                    cargo: "Tecnologia da Informação e Análise de Sistemas",
+                    desc: "O setor que mais cresce, oferecendo vagas flexíveis e alta empregabilidade."
+                });
+                faculdadesList.push({
+                    nome: "Centros Universitários e Universidades Federais/Privadas de Destaque",
+                    detalhes: "Bacharelados e Tecnólogos com suporte completo de carreiras e incubadoras de inovação."
+                });
+            }
+
+            // Renderizar Profissões
+            profissoesList.forEach(p => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${p.cargo}</strong>${p.desc}`;
+                profissoesContainer.appendChild(li);
+            });
+
+            // Renderizar Faculdades e Suporte
+            if (faculdadesList.length === 0) {
+                faculdadesList.push({
+                    nome: "Rede Nacional de Educação Superior Inclusiva",
+                    detalhes: "Cursos superiores com matrizes curriculares flexíveis e foco em empregabilidade prática."
+                });
+            }
+
+            faculdadesList.forEach(f => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${f.nome}</strong>${f.detalhes}`;
+                faculdadesContainer.appendChild(li);
+            });
+        }
+    </script>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+  new window.VLibras.Widget({
+      rootPath: 'https://vlibras.gov.br/app',
+      personalization: 'https://vlibras.gov.br/config/default_logo.json',
+      avatar: 'random',
+      position: 'R',
+  });
+</script>
+</body>
+</html>
